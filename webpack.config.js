@@ -23,12 +23,27 @@ const optimization = () => {
     return config
 }
 
-const filename = ext => isDev ? '[name].'+ext : '[name].[hash].'+ext
+const babelOptions = (preset) => {
+    const opts = {
+        presets: [
+            '@babel/preset-env',
+        ]
+    }
+
+    if (preset) {
+        opts.presets.push(preset)
+    }
+
+    return opts
+}
+
+const filename = ext => isDev ? '[name].' + ext : '[name].[hash].' + ext
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
-        main: './index.js',
+        // main: ['@babel/polyfill', './index.js'],
+        main: ['@babel/polyfill', './index.jsx'],
         analytics: './components/analytics.js'
     },
     output: {
@@ -36,7 +51,7 @@ module.exports = {
         filename: filename('js'),
     },
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.jsx', '.ts', '.json'],
         alias: {
             '@components': path.resolve(__dirname, 'src/components'),
         },
@@ -80,10 +95,34 @@ module.exports = {
             }, {
                 test: /\.(ttf|woff|woff2|eot)$/,
                 use: ['file-loader']
-            }, {
-                test: /\.xml$/,
-                use: ['xml-loader']
-            }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: babelOptions()
+                }
+
+            },
+            {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: babelOptions('@babel/preset-typescript')
+                }
+
+            },
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: babelOptions('@babel/preset-react')
+                }
+
+            },
 
         ]
     }

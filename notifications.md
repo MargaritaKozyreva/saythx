@@ -17,3 +17,8 @@
 15. npm i -D cross-env - пакет, который задает системные переменные
 16. npm i -D terser-webpack-plugin - минимизация js
 17. npm i -D optimize-css-assets-webpack-plugin
+18. npm i -D babel-loader @babel/core
+19. npm i @babel/polyfill
+20. npm i -D @babel/preset-typescript
+21. npm i -D @babel/preset-react
+22. npm i react react-dom
