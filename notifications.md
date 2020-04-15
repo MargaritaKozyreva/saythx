@@ -22,3 +22,6 @@
 20. npm i -D @babel/preset-typescript
 21. npm i -D @babel/preset-react
 22. npm i react react-dom
+23. npm i -D eslint-loader
+24. npm i -D eslint
+25. npm i -D babel-eslint
