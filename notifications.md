@@ -25,3 +25,4 @@
 23. npm i -D eslint-loader
 24. npm i -D eslint
 25. npm i -D babel-eslint
+26. npm i -D webpack-bundle-analyzer

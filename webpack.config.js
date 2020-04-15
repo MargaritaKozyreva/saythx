@@ -7,6 +7,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const {
     CleanWebpackPlugin
 } = require('clean-webpack-plugin')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = process.env.NODE_ENV === 'production'
@@ -43,11 +44,37 @@ const jsLoaders = () => {
         options: babelOptions()
     }];
 
-    if(isDev){
-        loader.push('eslint-loader')
-    }
+    // if (isDev) {
+    //     loaders.push('eslint-loader')
+    // }
 
     return loaders
+}
+
+const plugins = () => {
+    const base = [
+        new HTMLWebpackPlugin({
+            template: './index.html',
+            filename: 'index.html',
+            // minify: {
+            //     collapseWhitespace: isProd
+            // }
+        }),
+        new MiniCssExtractPlugin({
+            filename: filename('css')
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([{
+            from: path.resolve(__dirname, 'src/favicon.png'),
+            to: path.resolve(__dirname, 'dist'),
+        }])
+    ]
+
+    if (isProd) {
+        base.push(new BundleAnalyzerPlugin())
+    }
+
+    return base
 }
 
 const filename = ext => isDev ? '[name].' + ext : '[name].[hash].' + ext
@@ -75,24 +102,7 @@ module.exports = {
         hot: isDev
     },
     devtool: isDev ? 'source-map' : '',
-    plugins: [
-        new HTMLWebpackPlugin({
-            template: './index.html',
-            filename: 'index.html',
-            // minify: {
-            //     collapseWhitespace: isProd
-            // }
-        }),
-        new MiniCssExtractPlugin({
-            filename: filename('css')
-        }),
-        new CleanWebpackPlugin(),
-        new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, 'src/favicon.png'),
-            to: path.resolve(__dirname, 'dist'),
-        }]),
-
-    ],
+    plugins: plugins(),
     module: {
         rules: [{
                 test: /\.css$/,
