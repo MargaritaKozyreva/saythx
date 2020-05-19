@@ -26,3 +26,9 @@
 24. npm i -D eslint
 25. npm i -D babel-eslint
 26. npm i -D webpack-bundle-analyzer
+27. eslint - анализатор чистоты кода npm i -D eslint-config-airbnb
+28. prettier -  средство для форматирования кода, которое нацелено на использование жёстко заданных правил по оформлению npm install -D eslint-config-prettier
+29. npm install -D eslint-plugin-import - обеспечивает возможность работы с синтаксисом ES2015+ (ES6+)
+30. npm install -D eslint-plugin-react@latest
+31. git hooks ({ pre-commit }) - при каждом коммите срабатывает pre-commit
+32. husky - позволяет задействовать хуки гита, выполнять указанные действия во время коммита или пуша в ветку
